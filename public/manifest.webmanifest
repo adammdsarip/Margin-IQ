@@ -1,0 +1,13 @@
+{
+  "name": "MarginIQ",
+  "short_name": "MarginIQ",
+  "description": "Know your numbers. Make smarter decisions.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F7F6F2",
+  "theme_color": "#0F1F3D",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
