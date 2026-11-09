@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import {
   PRICING_UNITS,
-  SALES_PERIODS,
   getOfferType,
   getOfferTypes,
-  getPricingUnit,
 } from '../../data/businessSetup.js';
 import { isBlank, parseAmount, parseWholeNumber } from '../../utils/validation.js';
 import useFormState from '../../hooks/useFormState.js';
@@ -45,15 +43,12 @@ export default function OfferForm({ header, offer, profile, onSave, onCancel }) 
       pricingUnit: offer?.pricingUnit ?? '',
       customUnit: offer?.customUnit ?? '',
       expectedSales: formatAmountInput(offer?.expectedSales),
-      salesPeriod: offer?.salesPeriod ?? 'month',
       targetCustomer: offer?.targetCustomer ?? '',
     },
     validate
   );
 
   const selectedType = getOfferType(values.type);
-  const unit = getPricingUnit(values.pricingUnit);
-  const unitWord = values.pricingUnit === 'custom' ? values.customUnit.trim() || 'unit' : unit?.short;
 
   const handleTypeChange = (e) => {
     const typeId = e.target.value;
@@ -75,7 +70,6 @@ export default function OfferForm({ header, offer, profile, onSave, onCancel }) 
       pricingUnit: values.pricingUnit,
       customUnit: values.pricingUnit === 'custom' ? values.customUnit.trim() : '',
       expectedSales: parseWholeNumber(values.expectedSales),
-      salesPeriod: values.salesPeriod,
       targetCustomer: values.targetCustomer.trim(),
     });
   };
@@ -150,18 +144,13 @@ export default function OfferForm({ header, offer, profile, onSave, onCancel }) 
             title="Demand"
             description="Your realistic sales estimate. Later stages use it for revenue, break-even and marketing targets."
           >
-            <div className="field-row">
-              <Field
-                label="Expected sales / bookings"
-                error={errors.expectedSales}
-                hint={unitWord ? `Number of ${unitWord === 'month' || unitWord === 'year' ? 'subscribers' : `${unitWord}s`} sold.` : undefined}
-              >
-                <AffixInput {...bind('expectedSales')} inputMode="numeric" autoComplete="off" placeholder="0" />
-              </Field>
-              <Field label="Period">
-                <Select {...bind('salesPeriod')} options={SALES_PERIODS} />
-              </Field>
-            </div>
+            <Field
+              label="Expected sales / bookings per month"
+              error={errors.expectedSales}
+              hint="How many you realistically expect to sell in a typical month."
+            >
+              <AffixInput {...bind('expectedSales')} suffix="per month" inputMode="numeric" autoComplete="off" placeholder="0" />
+            </Field>
             <Field label="Target customer" optional hint="Who this offer is for. Keep it specific.">
               <TextInput {...bind('targetCustomer')} maxLength={120} placeholder="e.g. Families with young children in Singapore" />
             </Field>

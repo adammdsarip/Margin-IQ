@@ -72,7 +72,7 @@ Everything is saved in the browser under the localStorage key `marginiq:v1:app-s
   profiles: [{ id, name, businessModelId, description, industry, currency,
                website, location, createdAt, updatedAt }],
   offers:   [{ id, profileId, name, description, type, price, pricingUnit,
-               customUnit, expectedSales, salesPeriod, targetCustomer,
+               customUnit, expectedSales (per month), targetCustomer,
                createdAt, updatedAt }],
 }
 ```

@@ -160,16 +160,6 @@
   }
 }
 
-.offer-switch {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .offer-switch {
-    width: 280px;
-  }
-}
-
 .back-link {
   display: inline-flex;
   align-items: center;

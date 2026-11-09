@@ -11,7 +11,7 @@
  * }
  */
 import { getBusinessModel } from '../data/businessModels.js';
-import { DEFAULT_CURRENCY } from '../data/businessSetup.js';
+import { DEFAULT_CURRENCY, LEGACY_OFFER_TYPES } from '../data/businessSetup.js';
 import { createSeedOffers, createSeedProfiles } from '../data/seedProfiles.js';
 
 export const SCHEMA_VERSION = 2;
@@ -37,12 +37,11 @@ export const normalizeOffer = (o) => ({
   profileId: o.profileId,
   name: str(o.name),
   description: str(o.description),
-  type: str(o.type),
+  type: LEGACY_OFFER_TYPES[o.type] ?? str(o.type),
   price: num(o.price),
   pricingUnit: str(o.pricingUnit) || 'unit',
   customUnit: str(o.customUnit),
   expectedSales: num(o.expectedSales),
-  salesPeriod: str(o.salesPeriod) || 'month',
   targetCustomer: str(o.targetCustomer),
   createdAt: str(o.createdAt) || new Date().toISOString(),
   updatedAt: str(o.updatedAt) || new Date().toISOString(),

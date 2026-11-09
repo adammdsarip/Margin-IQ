@@ -50,12 +50,6 @@ export const PRICING_UNITS = [
   { id: 'custom', label: 'Custom', short: null },
 ];
 
-export const SALES_PERIODS = [
-  { id: 'week', label: 'per week' },
-  { id: 'month', label: 'per month' },
-  { id: 'year', label: 'per year' },
-];
-
 /**
  * Offer types available for each business model.
  * `unit` is the pricing unit suggested when the type is chosen.
@@ -65,26 +59,22 @@ export const OFFER_TYPES = {
     { id: 'service-package', label: 'Service package', hint: 'e.g. photography package', unit: 'project' },
     { id: 'session', label: 'Single session', hint: 'e.g. massage session', unit: 'session' },
     { id: 'consulting', label: 'Consulting service', hint: 'e.g. strategy consultation', unit: 'hour' },
-    { id: 'retainer', label: 'Monthly retainer', hint: 'ongoing service billed monthly', unit: 'monthly' },
     { id: 'other-service', label: 'Other service', unit: 'unit' },
   ],
   product: [
     { id: 'physical', label: 'Physical product', unit: 'unit' },
     { id: 'digital', label: 'Digital product', unit: 'unit' },
-    { id: 'bundle', label: 'Product bundle', unit: 'unit' },
     { id: 'other-product', label: 'Other product', unit: 'unit' },
   ],
   package: [
     { id: 'travel', label: 'Travel package', unit: 'family' },
     { id: 'event', label: 'Event package', unit: 'project' },
     { id: 'wedding', label: 'Wedding package', unit: 'project' },
-    { id: 'experience', label: 'Experience or tour', unit: 'customer' },
     { id: 'other-package', label: 'Other package or project', unit: 'project' },
   ],
   subscription: [
     { id: 'monthly-membership', label: 'Monthly membership', unit: 'monthly' },
     { id: 'annual-subscription', label: 'Annual subscription', unit: 'annually' },
-    { id: 'software', label: 'Software subscription', unit: 'monthly' },
     { id: 'other-subscription', label: 'Other subscription', unit: 'monthly' },
   ],
   'lead-generation': [
@@ -95,12 +85,19 @@ export const OFFER_TYPES = {
   ],
 };
 
+/** Offer types removed in cleanup, mapped to their model's catch-all so saved offers keep a valid type. */
+export const LEGACY_OFFER_TYPES = {
+  retainer: 'other-service',
+  bundle: 'other-product',
+  experience: 'other-package',
+  software: 'other-subscription',
+};
+
 const byId = (list, id) => list.find((item) => item.id === id) ?? null;
 
 export const getCurrency = (id) => byId(CURRENCIES, id);
 export const getIndustry = (id) => byId(INDUSTRIES, id);
 export const getPricingUnit = (id) => byId(PRICING_UNITS, id);
-export const getSalesPeriod = (id) => byId(SALES_PERIODS, id);
 export const getOfferTypes = (modelId) => OFFER_TYPES[modelId] ?? [];
 export const getOfferType = (typeId) =>
   Object.values(OFFER_TYPES).flat().find((t) => t.id === typeId) ?? null;

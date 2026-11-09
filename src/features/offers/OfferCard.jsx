@@ -1,10 +1,9 @@
-import { getOfferType, getSalesPeriod, unitShortLabel } from '../../data/businessSetup.js';
+import { getOfferType, unitShortLabel } from '../../data/businessSetup.js';
 import { formatMoney, formatNumber } from '../../utils/format.js';
 import Button from '../../components/ui/Button.jsx';
 
 export default function OfferCard({ offer, currency, current, onOpen, onEdit, onDuplicate, onDelete }) {
   const type = getOfferType(offer.type);
-  const period = getSalesPeriod(offer.salesPeriod);
   const titleId = `offer-${offer.id}-title`;
 
   return (
@@ -36,7 +35,7 @@ export default function OfferCard({ offer, currency, current, onOpen, onEdit, on
             <dt>Expected sales</dt>
             <dd>
               {formatNumber(offer.expectedSales)}
-              <span className="offer-card__unit"> {period?.label ?? 'per month'}</span>
+              <span className="offer-card__unit"> per month</span>
             </dd>
           </div>
         </dl>

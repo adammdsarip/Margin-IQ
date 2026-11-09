@@ -1,5 +1,6 @@
 import Button from '../ui/Button.jsx';
 import '../ui/ActionBar.css';
+import './Form.css';
 
 /** Sticky save/cancel bar for full-page forms. Matches the Stage 1 selection bar. */
 export default function FormActionBar({ summary, submitLabel = 'Save', onCancel }) {

@@ -226,3 +226,30 @@
   background: var(--surface-muted);
   font-size: var(--text-base);
 }
+
+/* ---------- Sticky save bar (extends .selection-bar) ---------- */
+.form-action-bar__buttons {
+  display: flex;
+  flex: 1;
+  gap: var(--space-3);
+}
+
+.form-action-bar__buttons .btn {
+  flex: 1;
+}
+
+.form-action-bar .selection-bar__summary {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .form-action-bar .selection-bar__summary {
+    display: flex;
+  }
+  .form-action-bar__buttons {
+    flex: none;
+  }
+  .form-action-bar__buttons .btn {
+    flex: none;
+  }
+}
