@@ -5,20 +5,42 @@ import { useEffect, useSyncExternalStore } from 'react';
  * host without server rewrites. Swap for a full router when modules need
  * nested routes or params.
  */
-const getPath = () => {
+// Path is mirrored in memory so navigation still works where the URL hash is
+// not writable (for example inside a sandboxed preview frame).
+let memoryPath = null;
+const listeners = new Set();
+
+const hashPath = () => {
   const hash = window.location.hash.replace(/^#/, '');
   return hash.startsWith('/') ? hash : '/';
 };
 
+const getPath = () => memoryPath ?? hashPath();
+
 const subscribe = (callback) => {
-  window.addEventListener('hashchange', callback);
-  return () => window.removeEventListener('hashchange', callback);
+  const onHash = () => {
+    memoryPath = null;
+    callback();
+  };
+  window.addEventListener('hashchange', onHash);
+  listeners.add(callback);
+  return () => {
+    window.removeEventListener('hashchange', onHash);
+    listeners.delete(callback);
+  };
 };
 
 export const usePath = () => useSyncExternalStore(subscribe, getPath, () => '/');
 
 export const navigate = (path) => {
-  if (getPath() !== path) window.location.hash = path;
+  if (getPath() === path) return;
+  memoryPath = path;
+  try {
+    window.history.replaceState(null, '', `#${path}`);
+  } catch {
+    // URL not writable; in-memory path still drives the UI.
+  }
+  listeners.forEach((fn) => fn());
 };
 
 export function Router({ routes, fallback = '/' }) {
