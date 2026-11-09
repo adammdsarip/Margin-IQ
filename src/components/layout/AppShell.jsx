@@ -1,4 +1,5 @@
 import Header from './Header.jsx';
+import Toast from '../ui/Toast.jsx';
 import './AppShell.css';
 
 export default function AppShell({ children }) {
@@ -15,6 +16,7 @@ export default function AppShell({ children }) {
           <span>Data is stored on this device.</span>
         </div>
       </footer>
+      <Toast />
     </div>
   );
 }

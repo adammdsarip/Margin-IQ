@@ -1,4 +1,5 @@
 import Button from '../../components/ui/Button.jsx';
+import '../../components/ui/ActionBar.css';
 
 /** Sticky action bar summarising the current choice and gating Continue. */
 export default function SelectionBar({ model, profile, onContinue, onClearProfile }) {

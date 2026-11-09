@@ -1,4 +1,4 @@
-import { useEffect, useSyncExternalStore } from 'react';
+import { createContext, useContext, useEffect, useSyncExternalStore } from 'react';
 
 /**
  * Minimal hash router. Hash routing keeps the PWA deployable to any static
@@ -30,6 +30,8 @@ const subscribe = (callback) => {
   };
 };
 
+export const getCurrentPath = () => getPath();
+
 export const usePath = () => useSyncExternalStore(subscribe, getPath, () => '/');
 
 export const navigate = (path) => {
@@ -43,9 +45,34 @@ export const navigate = (path) => {
   listeners.forEach((fn) => fn());
 };
 
+/** Matches "/business/:profileId" style patterns. Returns params or null. */
+const matchPath = (pattern, path) => {
+  const a = pattern.split('/').filter(Boolean);
+  const b = path.split('/').filter(Boolean);
+  if (a.length !== b.length) return null;
+  const params = {};
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i].startsWith(':')) params[a[i].slice(1)] = decodeURIComponent(b[i]);
+    else if (a[i] !== b[i]) return null;
+  }
+  return params;
+};
+
+const ParamsContext = createContext({});
+
+export const useParams = () => useContext(ParamsContext);
+
 export function Router({ routes, fallback = '/' }) {
   const path = usePath();
-  const route = routes.find((r) => r.path === path);
+  let route = null;
+  let params = null;
+  for (const r of routes) {
+    params = matchPath(r.path, path);
+    if (params) {
+      route = r;
+      break;
+    }
+  }
 
   useEffect(() => {
     if (!route) navigate(fallback);
@@ -56,9 +83,13 @@ export function Router({ routes, fallback = '/' }) {
       document.title = route.title ? `${route.title} · MarginIQ` : 'MarginIQ';
       window.scrollTo(0, 0);
     }
-  }, [route]);
+  }, [route, path]);
 
   if (!route) return null;
   const Page = route.component;
-  return <Page />;
+  return (
+    <ParamsContext.Provider value={params}>
+      <Page key={path} />
+    </ParamsContext.Provider>
+  );
 }

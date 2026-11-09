@@ -1,10 +1,10 @@
 /**
- * Setup flow definition. Drives the progress indicator; later modules add
- * their own `path` as they are implemented.
+ * Setup flow definition. Drives the progress indicator.
  */
 export const SETUP_STEPS = [
-  { id: 'model', label: 'Business model', path: '/' },
-  { id: 'details', label: 'Business details', path: '/setup/details' },
-  { id: 'costs', label: 'Costs & pricing' },
+  { id: 'model', label: 'Business model' },
+  { id: 'business', label: 'Business profile' },
+  { id: 'offers', label: 'Offers' },
+  { id: 'costs', label: 'Costs & margins' },
   { id: 'marketing', label: 'Marketing' },
 ];

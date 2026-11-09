@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import { BUSINESS_MODELS } from '../../data/businessModels.js';
 import Button from '../../components/ui/Button.jsx';
+import '../../components/form/Form.css';
 
 export default function CreateProfileForm({ defaultModelId, onSubmit, onCancel }) {
   const [name, setName] = useState('');

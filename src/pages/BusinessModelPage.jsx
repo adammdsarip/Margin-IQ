@@ -29,7 +29,7 @@ export default function BusinessModelPage() {
   const handleContinue = () => {
     if (!selectedModel) return;
     commitSelection();
-    navigate('/setup/details');
+    navigate(activeProfile ? `/business/${activeProfile.id}` : '/business/new');
   };
 
   return (

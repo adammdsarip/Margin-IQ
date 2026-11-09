@@ -4,7 +4,11 @@ import './StepIndicator.css';
 export default function StepIndicator({ current }) {
   const index = SETUP_STEPS.findIndex((s) => s.id === current);
   return (
-    <ol className="steps" aria-label="Setup progress">
+    <ol
+      className="steps"
+      aria-label="Setup progress"
+      style={{ gridTemplateColumns: `repeat(${SETUP_STEPS.length}, minmax(0, 1fr))` }}
+    >
       {SETUP_STEPS.map((step, i) => {
         const state = i < index ? 'done' : i === index ? 'current' : 'upcoming';
         return (

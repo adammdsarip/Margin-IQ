@@ -55,6 +55,14 @@
   background: var(--surface-muted);
 }
 
+.btn--danger {
+  background: var(--danger);
+  color: #fff;
+}
+.btn--danger:hover:not(:disabled) {
+  background: var(--danger-strong);
+}
+
 .btn:disabled {
   cursor: not-allowed;
   background: var(--disabled-bg);
