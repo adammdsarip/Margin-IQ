@@ -1,13 +1,18 @@
 import { calculate, formatMoney, formatPercent, toNumber } from './calc.js';
+import { buildSuggestions } from './suggestions.js';
+import { PRESETS } from './presets.js';
 
 export default function Results({ values, currency }) {
-  const m = calculate({
+  const input = {
     price: toNumber(values.price),
     units: toNumber(values.units),
     costPerSale: toNumber(values.cost),
     overheads: toNumber(values.overheads),
-  });
+    targetMargin: Math.min(toNumber(values.target), 99.9) / 100,
+  };
+  const m = calculate(input);
   const money = (n, dp) => formatMoney(n, currency, dp);
+  const suggestions = buildSuggestions(m, input, PRESETS[values.type]?.tip, money);
   const hasInput = m.revenue > 0;
   const tone = m.netProfit > 0 ? 'is-profit' : m.netProfit < 0 ? 'is-loss' : '';
 
@@ -74,10 +79,15 @@ export default function Results({ values, currency }) {
           </dd>
         </div>
       </dl>
-      {m.losesMoneyPerSale && (
-        <p className="warning" role="status">
-          The cost per sale is at or above the price, so each sale loses money before overheads.
-        </p>
+      <h3 className="suggestions__title">Suggestions</h3>
+      {suggestions.length === 0 ? (
+        <p className="suggestions__empty">Enter a price and your expected sales to get suggestions.</p>
+      ) : (
+        <ul className="suggestions">
+          {suggestions.map((s) => (
+            <li key={s.text} className={`suggestion suggestion--${s.tone}`}>{s.text}</li>
+          ))}
+        </ul>
       )}
     </section>
   );

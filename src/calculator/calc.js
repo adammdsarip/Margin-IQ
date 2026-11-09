@@ -6,7 +6,7 @@ export const toNumber = (text) => {
   return Number.isFinite(n) && n >= 0 ? n : 0;
 };
 
-export function calculate({ price, units, costPerSale, overheads }) {
+export function calculate({ price, units, costPerSale, overheads, targetMargin = 0.5 }) {
   const revenue = price * units;
   const variableCosts = costPerSale * units;
   const grossProfit = revenue - variableCosts;
@@ -26,6 +26,12 @@ export function calculate({ price, units, costPerSale, overheads }) {
     // Sales needed each month for gross profit to cover overheads.
     breakEvenSales: profitPerSaleBeforeOverheads > 0 ? Math.ceil(overheads / profitPerSaleBeforeOverheads) : null,
     losesMoneyPerSale: profitPerSaleBeforeOverheads <= 0 && price > 0,
+    // Price that reaches the target gross margin at the current cost per sale.
+    priceForTargetMargin: targetMargin >= 0 && targetMargin < 1 ? costPerSale / (1 - targetMargin) : null,
+    // Price at which net profit is zero at the current sales volume.
+    priceToBreakEven: units > 0 ? costPerSale + overheads / units : null,
+    overheadShare: revenue > 0 ? overheads / revenue : null,
+    contributionPerSale: profitPerSaleBeforeOverheads,
   };
 }
 

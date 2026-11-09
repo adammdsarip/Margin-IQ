@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { CURRENCIES, DEFAULT_TYPE, PRESETS, exampleFor } from './presets.js';
+import { CURRENCIES, DEFAULT_TARGET_MARGIN, DEFAULT_TYPE, PRESETS, exampleFor } from './presets.js';
 import Results from './Results.jsx';
 import './calculator.css';
 
 const STORAGE_KEY = 'marginiq:calculator:v1';
 
 const initial = () => {
-  const fallback = { type: DEFAULT_TYPE, currency: 'SGD', ...exampleFor(DEFAULT_TYPE) };
+  const fallback = { type: DEFAULT_TYPE, currency: 'SGD', target: DEFAULT_TARGET_MARGIN, ...exampleFor(DEFAULT_TYPE) };
   try {
     const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
     if (saved && PRESETS[saved.type] && CURRENCIES.includes(saved.currency)) return { ...fallback, ...saved };
@@ -101,6 +101,15 @@ export default function Calculator() {
             currency={state.currency}
             onChange={set('overheads')}
           />
+
+          <div className="field">
+            <label htmlFor="target">Target gross margin</label>
+            <div className="affix affix--suffix">
+              <input id="target" type="text" inputMode="decimal" autoComplete="off" value={state.target} onChange={set('target')} />
+              <span aria-hidden="true">%</span>
+            </div>
+            <p className="hint">The margin you want to keep on each sale. Used to suggest a price.</p>
+          </div>
 
           <div className="actions">
             <button type="button" className="btn" onClick={() => loadExample()}>Load example</button>
