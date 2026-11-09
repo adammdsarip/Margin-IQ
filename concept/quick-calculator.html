@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>MarginIQ Quick Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f1f3d; --teal:#2f7d77; --teal-soft:#e6f1ef;
+  --bg:#f7f6f2; --surface:#ffffff; --muted-bg:#f3f2ed;
+  --border:#e4e2db; --border-strong:#cfccc3;
+  --text:#131b2c; --muted:#566072; --subtle:#858b98;
+  --good:#2f6f3a; --good-bg:#edf6ee;
+  --warn:#7a5a10; --warn-bg:#fbf6e9; --warn-border:#e8d9ad;
+  --bad:#a12a22; --bad-bg:#fbefed; --bad-border:#f0c9c4;
+  --info:#24456f; --info-bg:#eef3fa;
+}
+*{box-sizing:border-box}
+html,body{height:auto}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto;padding-block:20px 40px}
+header.top{background:var(--navy);color:#f7f6f2;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:14px max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:12px}
+.brand{font-weight:700;letter-spacing:.14em;font-size:14px}
+.brand-tag{font-size:12px;color:#a9b2c4;margin-left:auto;text-align:right}
+h1{font-size:26px;line-height:1.2;letter-spacing:-.02em;margin:28px 0 6px;font-weight:600}
+.lede{margin:0 0 22px;color:var(--muted);max-width:60ch}
+.grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}
+@media(min-width:880px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:18px}
+.card h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin:0 0 14px;font-weight:600}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;min-width:0}
+.field label{font-weight:500;font-size:14px}
+.hint{font-size:12px;color:var(--subtle);margin:0}
+input,select{width:100%;min-height:44px;padding:0 12px;border:1px solid var(--border-strong);border-radius:4px;background:#fff;color:var(--text);font:inherit;font-size:16px}
+input:focus,select:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgb(47 125 119 / .18)}
+.row2{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:480px){.row2{grid-template-columns:1fr 1fr;gap:14px}}
+.affix{display:flex}
+.affix span{display:inline-flex;align-items:center;padding:0 10px;border:1px solid var(--border-strong);border-right:0;border-radius:4px 0 0 4px;background:var(--muted-bg);color:var(--muted);font-size:13px;font-weight:500;white-space:nowrap}
+.affix input{border-radius:0 4px 4px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+button{min-height:42px;padding:0 16px;border-radius:4px;border:1px solid var(--navy);background:var(--navy);color:#fff;font:inherit;font-weight:600;font-size:14px;cursor:pointer}
+button.secondary{background:#fff;color:var(--navy);border-color:var(--border-strong)}
+button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.hero{display:flex;flex-direction:column;gap:4px;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.hero .label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--subtle);font-weight:600}
+.hero .big{font-size:34px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.hero .sub{color:var(--muted);font-size:14px}
+.big.good{color:var(--good)} .big.bad{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+td{padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;vertical-align:top}
+td:last-child{text-align:right;font-weight:600;white-space:nowrap}
+td .pct{display:block;font-size:12px;font-weight:500;color:var(--subtle)}
+tr.total td{font-weight:600}
+tr.total td:last-child{font-weight:700}
+.minus{color:var(--muted);font-weight:500}
+.empty{color:var(--muted);font-size:14px}
+footer{margin-top:24px;font-size:12px;color:var(--subtle)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand">MARGINIQ</span>
+    <span class="brand-tag">Know your numbers. Make smarter decisions.</span>
+  </header>
+
+  <h1>Quick margin calculator</h1>
+  <p class="lede">Choose your business type, enter your numbers, and see your margin, profit and break-even point. Every figure is per month unless marked per sale.</p>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="inputs-h">
+      <h2 id="inputs-h">Your numbers</h2>
+
+      <div class="field">
+        <label for="type">Business type</label>
+        <select id="type"></select>
+        <p class="hint" id="example-note"></p>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="currency">Currency</label>
+          <select id="currency">
+            <option>SGD</option><option>MYR</option><option>USD</option><option>AUD</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="target">Target gross margin</label>
+          <div class="affix"><input id="target" type="text" inputmode="decimal" value="50"><span>%</span></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="price" id="price-label">Price per sale</label>
+        <div class="affix"><span id="cur-a">SGD</span><input id="price" type="text" inputmode="decimal"></div>
+      </div>
+
+      <div class="field">
+        <label for="units" id="units-label">Sales per month</label>
+        <input id="units" type="text" inputmode="numeric">
+      </div>
+
+      <div class="field">
+        <label for="vc" id="vc-label">Cost per sale</label>
+        <div class="affix"><span id="cur-b">SGD</span><input id="vc" type="text" inputmode="decimal"></div>
+        <p class="hint">Costs that rise with each sale, such as materials, freelancers, transport or payment fees.</p>
+      </div>
+
+      <div class="field">
+        <label for="fixed">Monthly overheads</label>
+        <div class="affix"><span id="cur-c">SGD</span><input id="fixed" type="text" inputmode="decimal"></div>
+        <p class="hint">Costs you pay whether or not you make a sale, such as rent, software, insurance and admin.</p>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="load-example">Load example</button>
+        <button type="button" class="secondary" id="clear">Clear</button>
+      </div>
+    </section>
+
+    <section class="card" aria-live="polite" aria-labelledby="results-h">
+      <h2 id="results-h">Results</h2>
+      <div id="results"></div>
+    </section>
+  </div>
+
+  <footer>Quick concept for testing the idea. Nothing is saved, and figures are estimates.</footer>
+</div>
+
+<script>
+const PRESETS = {
+  service: {
+    name: 'Service business', example: 'Photography package',
+    price: 800, units: 10, vc: 180, fixed: 2500,
+    labels: ['Price per booking', 'Bookings per month', 'Direct cost per booking'],
+    tip: 'Track the hours behind each booking. If a job takes longer than planned, your margin drops even when the price stays the same.'
+  },
+  product: {
+    name: 'Product business', example: 'Handmade candles',
+    price: 28, units: 120, vc: 11, fixed: 1800,
+    labels: ['Price per unit', 'Units sold per month', 'Cost per unit'],
+    tip: 'Include packaging, shipping and payment fees in the cost per unit. These are the costs most often missed.'
+  },
+  package: {
+    name: 'Package / project', example: 'Weekend family getaway',
+    price: 1280, units: 12, vc: 760, fixed: 2000,
+    labels: ['Price per package', 'Packages sold per month', 'Cost per package'],
+    tip: 'Include accommodation, transport and meals in the cost per package. Cancellations and late changes often shift these figures.'
+  },
+  subscription: {
+    name: 'Subscription business', example: 'Monthly membership',
+    price: 99, units: 80, vc: 14, fixed: 1500,
+    labels: ['Fee per subscriber per month', 'Active subscribers', 'Cost per subscriber per month'],
+    tip: 'Recurring revenue depends on keeping customers. Track how many you lose each month, not just how many you sign up.'
+  },
+  'lead-generation': {
+    name: 'Lead generation', example: 'Insurance leads',
+    price: 45, units: 200, vc: 30, fixed: 1200,
+    labels: ['Revenue per customer won', 'Customers won per month', 'Cost per customer won'],
+    tip: 'Track cost per lead and cost per sale separately. A cheap lead that never converts is still a cost.'
+  }
+};
+
+const $ = (id) => document.getElementById(id);
+const els = { type: $('type'), currency: $('currency'), target: $('target'), price: $('price'), units: $('units'), vc: $('vc'), fixed: $('fixed') };
+
+Object.entries(PRESETS).forEach(([id, p]) => {
+  const o = document.createElement('option');
+  o.value = id; o.textContent = p.name;
+  els.type.appendChild(o);
+});
+
+const money = (n, dp = 0) => {
+  const cur = els.currency.value;
+  try {
+    return new Intl.NumberFormat('en-SG', { style: 'currency', currency: cur, currencyDisplay: 'code', minimumFractionDigits: dp, maximumFractionDigits: dp })
+      .format(n).replace(/ /g, ' ');
+  } catch { return `${cur} ${n.toFixed(dp)}`; }
+};
+const pct = (x) => (x === null ? '—' : `${(x * 100).toFixed(1)}%`);
+const num = (s) => {
+  const n = Number(String(s ?? '').replace(/[,\s]/g, ''));
+  return Number.isFinite(n) && n >= 0 ? n : 0;
+};
+
+function calc() {
+  const p = num(els.price.value), u = num(els.units.value), v = num(els.vc.value), f = num(els.fixed.value);
+  const target = num(els.target.value) / 100;
+  const revenue = p * u, variable = v * u, gross = revenue - variable, net = gross - f;
+  const cm = p - v; // contribution per sale
+  return {
+    p, u, v, f, target, revenue, variable, gross, net, cm,
+    grossMargin: revenue > 0 ? gross / revenue : null,
+    netMargin: revenue > 0 ? net / revenue : null,
+    profitPerSale: u > 0 ? net / u : null,
+    markup: v > 0 ? (p - v) / v : null,
+    breakEven: cm > 0 ? Math.ceil(f / cm) : null,
+    priceForTarget: target < 1 ? v / (1 - target) : null,
+    priceToBreakEven: u > 0 ? v + f / u : null,
+    overheadShare: revenue > 0 ? f / revenue : null
+  };
+}
+
+function render() {
+  const preset = PRESETS[els.type.value];
+  const m = calc();
+  const cur = els.currency.value;
+  ['cur-a', 'cur-b', 'cur-c'].forEach((id) => ($(id).textContent = cur));
+  $('price-label').textContent = preset.labels[0];
+  $('units-label').textContent = preset.labels[1];
+  $('vc-label').textContent = preset.labels[2];
+  $('example-note').textContent = `Example: ${preset.example}. Replace the numbers with your own.`;
+
+  const netClass = m.net > 0 ? 'good' : m.net < 0 ? 'bad' : '';
+  const rows = [
+    ['Revenue per month', money(m.revenue), ''],
+    ['Cost per sale × sales', `− ${money(m.variable)}`, 'minus'],
+    ['Gross profit', money(m.gross), '', m.grossMargin !== null ? `${pct(m.grossMargin)} gross margin` : ''],
+    ['Monthly overheads', `− ${money(m.f)}`, 'minus'],
+    ['Net profit', money(m.net), '', m.netMargin !== null ? `${pct(m.netMargin)} net margin` : ''],
+  ];
+  const extras = [
+    ['Profit per sale', m.profitPerSale === null ? '—' : money(m.profitPerSale, 2)],
+    ['Markup on cost', m.markup === null ? '—' : `${(m.markup * 100).toFixed(0)}%`],
+    ['Break-even sales per month', m.breakEven === null ? '—' : `${m.breakEven} (you expect ${m.u})`],
+  ];
+
+  const tableRows = rows.map(([label, value, cls, sub]) => {
+    const total = label === 'Gross profit' || label === 'Net profit';
+    return `<tr class="${total ? 'total' : ''}"><td>${label}${sub ? `<span class="pct">${sub}</span>` : ''}</td><td class="${cls}">${value}</td></tr>`;
+  }).join('');
+  const extraRows = extras.map(([l, v]) => `<tr><td>${l}</td><td>${v}</td></tr>`).join('');
+
+  $('results').innerHTML = `
+    <div class="hero">
+      <span class="label">Net profit per month</span>
+      <span class="big ${netClass}">${money(m.net)}</span>
+      <span class="sub">${m.netMargin !== null ? `${pct(m.netMargin)} of revenue` : 'Enter your numbers to see margin'}</span>
+    </div>
+    <table>${tableRows}</table>
+    <h3>Other figures</h3>
+    <table>${extraRows}</table>`;
+}
+
+function loadExample() {
+  const p = PRESETS[els.type.value];
+  els.price.value = p.price; els.units.value = p.units; els.vc.value = p.vc; els.fixed.value = p.fixed;
+  render();
+}
+
+els.type.addEventListener('change', loadExample);
+els.currency.addEventListener('change', render);
+[els.target, els.price, els.units, els.vc, els.fixed].forEach((el) => el.addEventListener('input', render));
+$('load-example').addEventListener('click', loadExample);
+$('clear').addEventListener('click', () => {
+  ['price', 'units', 'vc', 'fixed'].forEach((k) => (els[k].value = ''));
+  render();
+  els.price.focus();
+});
+
+els.type.value = 'service';
+loadExample();
+</script>
+</body>
+</html>
