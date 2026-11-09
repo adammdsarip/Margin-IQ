@@ -1,14 +1,20 @@
-import { AppStateProvider } from './state/AppStateContext.jsx';
-import { Router } from './app/router.jsx';
-import { ROUTES } from './app/routes.js';
-import AppShell from './components/layout/AppShell.jsx';
+import Calculator from './calculator/Calculator.jsx';
 
 export default function App() {
   return (
-    <AppStateProvider>
-      <AppShell>
-        <Router routes={ROUTES} />
-      </AppShell>
-    </AppStateProvider>
+    <>
+      <header className="header">
+        <div className="container header__inner">
+          <span className="brand">MARGINIQ</span>
+          <span className="brand__tagline">Know your numbers. Make smarter decisions.</span>
+        </div>
+      </header>
+      <main className="container">
+        <Calculator />
+      </main>
+      <footer className="container footer">
+        Figures are estimates. Your numbers stay on this device.
+      </footer>
+    </>
   );
 }
