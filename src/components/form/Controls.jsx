@@ -32,7 +32,7 @@ export function AffixInput({ prefix, suffix, className = '', id, ...props }) {
   return (
     <div className="field__affix">
       {prefix && <span className="field__affix-text" aria-hidden="true">{prefix}</span>}
-      <input id={id} className={`field__input ${className}`.trim()} {...props} />
+      <input id={id} type="text" className={`field__input ${className}`.trim()} {...props} />
       {suffix && <span className="field__affix-text" aria-hidden="true">{suffix}</span>}
     </div>
   );

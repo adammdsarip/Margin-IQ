@@ -1,19 +1,20 @@
-import Modal from '../../components/ui/Modal.jsx';
-import Button from '../../components/ui/Button.jsx';
-import '../../components/form/Form.css';
+import ConfirmDialog from '../../components/ui/ConfirmDialog.jsx';
 
-export default function DeleteOfferDialog({ offer, onCancel, onConfirm }) {
+export default function DeleteOfferDialog({ offer, costCount = 0, onCancel, onConfirm }) {
+  const costs = costCount === 1 ? '1 offer-level cost' : `${costCount} offer-level costs`;
   return (
-    <Modal
+    <ConfirmDialog
       open={Boolean(offer)}
-      onClose={onCancel}
       title="Delete this offer?"
-      description={offer ? `"${offer.name}" and its assumptions will be removed from this business. This can't be undone.` : ''}
-    >
-      <div className="form__actions">
-        <Button variant="secondary" onClick={onCancel} autoFocus>Keep offer</Button>
-        <Button variant="danger" iconLeft="trash" onClick={onConfirm}>Delete offer</Button>
-      </div>
-    </Modal>
+      description={
+        offer
+          ? `"${offer.name}"${costCount ? ` and its ${costs}` : ''} will be removed from this business. This can't be undone.`
+          : ''
+      }
+      cancelLabel="Keep offer"
+      confirmLabel="Delete offer"
+      onCancel={onCancel}
+      onConfirm={onConfirm}
+    />
   );
 }

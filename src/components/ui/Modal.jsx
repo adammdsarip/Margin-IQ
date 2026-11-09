@@ -3,7 +3,7 @@ import Icon from './Icon.jsx';
 import './Modal.css';
 
 /** Accessible modal built on the native <dialog> element. */
-export default function Modal({ open, onClose, title, description, children }) {
+export default function Modal({ open, onClose, title, description, size, children }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function Modal({ open, onClose, title, description, children }) {
   return (
     <dialog
       ref={ref}
-      className="modal"
+      className={`modal${size === 'lg' ? ' modal--lg' : ''}`}
       aria-labelledby="modal-title"
       onCancel={(event) => {
         event.preventDefault();

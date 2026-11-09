@@ -73,3 +73,72 @@ export const createSeedOffers = () => [
     updatedAt: daysAgo(3),
   },
 ];
+
+/**
+ * Example costs for the PURE INTENT example business.
+ * `category` is a default category key, resolved to the business's own
+ * category id when the seed is applied.
+ */
+export const createSeedCosts = () => [
+  {
+    id: 'seed-cost-booking-software',
+    profileId: 'seed-pure-intent',
+    offerId: null,
+    name: 'Booking & website software',
+    category: 'operating',
+    classification: 'fixed',
+    frequency: 'monthly',
+    quantity: 1,
+    unitCost: 89,
+    status: 'actual',
+  },
+  {
+    id: 'seed-cost-insurance',
+    profileId: 'seed-pure-intent',
+    offerId: null,
+    name: 'Travel agency insurance',
+    category: 'operating',
+    classification: 'fixed',
+    frequency: 'annually',
+    quantity: 1,
+    unitCost: 1200,
+    status: 'estimated',
+  },
+  {
+    id: 'seed-cost-resort',
+    profileId: 'seed-pure-intent',
+    offerId: 'seed-offer-3d2n',
+    name: 'Resort accommodation',
+    category: 'direct',
+    classification: 'variable',
+    frequency: 'per-booking',
+    quantity: 2,
+    unitCost: 380,
+    status: 'actual',
+    notes: '2 nights, family room',
+  },
+  {
+    id: 'seed-cost-coach',
+    profileId: 'seed-pure-intent',
+    offerId: 'seed-offer-3d2n',
+    name: 'Return transfer',
+    category: 'direct',
+    classification: 'variable',
+    frequency: 'per-booking',
+    quantity: 1,
+    unitCost: 160,
+    status: 'estimated',
+  },
+  {
+    id: 'seed-cost-lunch',
+    profileId: 'seed-pure-intent',
+    offerId: 'seed-offer-daytrip',
+    name: 'Lunch',
+    category: 'direct',
+    classification: 'variable',
+    frequency: 'per-customer',
+    quantity: 1,
+    unitCost: 22,
+    status: 'estimated',
+  },
+];

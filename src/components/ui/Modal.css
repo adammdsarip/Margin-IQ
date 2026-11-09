@@ -9,6 +9,20 @@
   box-shadow: var(--shadow-overlay);
 }
 
+.modal--lg {
+  width: min(640px, calc(100vw - 2 * var(--gutter)));
+}
+
+@media (max-width: 559px) {
+  .modal {
+    width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+  .modal__panel {
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
 .modal::backdrop {
   background: rgb(15 31 61 / 0.4);
 }

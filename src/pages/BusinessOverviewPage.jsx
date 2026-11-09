@@ -19,7 +19,7 @@ import './pages.css';
 
 export default function BusinessOverviewPage() {
   const { profile, ready } = useRouteRecords();
-  const { getOffers, activeOfferId, duplicateOffer, deleteOffer, selectOffer } = useAppState();
+  const { getOffers, getCosts, activeOfferId, duplicateOffer, deleteOffer, selectOffer } = useAppState();
   const [pendingDelete, setPendingDelete] = useState(null);
 
   if (!ready) return null;
@@ -66,6 +66,9 @@ export default function BusinessOverviewPage() {
           <div className="page-head__actions">
             <Button variant="secondary" iconLeft="edit" onClick={() => navigate(`${base}/edit`)}>
               Edit business
+            </Button>
+            <Button iconRight="arrow-right" onClick={() => navigate(`${base}/costs`)}>
+              Cost structure
             </Button>
           </div>
         </div>
@@ -152,6 +155,7 @@ export default function BusinessOverviewPage() {
 
       <DeleteOfferDialog
         offer={pendingDelete}
+        costCount={pendingDelete ? getCosts(profile.id).filter((c) => c.offerId === pendingDelete.id).length : 0}
         onCancel={() => setPendingDelete(null)}
         onConfirm={() => {
           deleteOffer(pendingDelete.id);

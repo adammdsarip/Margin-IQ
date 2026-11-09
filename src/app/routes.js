@@ -2,7 +2,7 @@ import BusinessModelPage from '../pages/BusinessModelPage.jsx';
 import BusinessFormPage from '../pages/BusinessFormPage.jsx';
 import BusinessOverviewPage from '../pages/BusinessOverviewPage.jsx';
 import OfferFormPage from '../pages/OfferFormPage.jsx';
-import OfferNextStepPage from '../pages/OfferNextStepPage.jsx';
+import CostsPage from '../pages/CostsPage.jsx';
 
 /**
  * Route registry. New calculator modules register their screens here.
@@ -17,6 +17,7 @@ export const ROUTES = [
   { path: '/business/:profileId/edit', title: 'Edit business', component: BusinessFormPage },
   { path: '/business/:profileId/offers/new', title: 'New offer', component: OfferFormPage },
   { path: '/business/:profileId/offers/:offerId/edit', title: 'Edit offer', component: OfferFormPage },
-  // Stage 3 entry (placeholder)
-  { path: '/business/:profileId/offers/:offerId', title: 'Costs & margins', component: OfferNextStepPage },
+  // Stage 3: cost structure
+  { path: '/business/:profileId/costs', title: 'Cost structure', component: CostsPage },
+  { path: '/business/:profileId/offers/:offerId', title: 'Offer costs', component: CostsPage },
 ];
